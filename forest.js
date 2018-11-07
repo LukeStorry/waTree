@@ -1,12 +1,12 @@
 var forest, tree;
-var starting_health, health1, health2, health3;
+var starting_health, health1, health2, health3, health_delta;
 
 function setup() {
   createCanvas(displayWidth, displayHeight);
   forest = loadImage("assets/forest.png");
   tree = loadImage("assets/tree.png");
 
-  starting_health = displayHeight * 0.7;
+  starting_health = displayHeight * 0.8;
   health1 = starting_health;
   health2 = starting_health;
   health3 = starting_health;
@@ -28,9 +28,9 @@ function draw() {
   tint(0, 0, 200, calculate_transparency(health3));
   image(tree, 3 * width / 4 - health3 / 4, height - health3, health3 / 3, health3);
 
-  health1 -= 0.1;
-  health2 -= 0.1;
-  health3 -= 0.1;
+  health1 -= starting_health / 10000;
+  health2 -= starting_health / 10000;
+  health3 -= starting_health / 10000;
 }
 
 function mousePressed() {
@@ -49,9 +49,9 @@ function calculate_transparency(health) {
 
 function update(health) {
   if (mouseY < height / 2 && health < starting_health * 1.5) {
-    return health + 20;
+    return health + starting_health / 15;
   } else if (health > starting_health * 0.7) {
-    return health - 20;
+    return health - starting_health / 15;
   } else {
     return health;
   }
