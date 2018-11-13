@@ -36,9 +36,9 @@ function draw() {
   tint(color3, calculate_transparency(health3));
   image(tree, 3 * width / 4 - health3 / 5, height - health3, health3 / 3, health3);
 
-  health1 -= height / 10000;
-  health2 -= height / 10000;
-  health3 -= height / 10000;
+  health1 -= height / 1000;
+  health2 -= height / 1000;
+  health3 -= height / 1000;
 }
 
 function mousePressed() {
