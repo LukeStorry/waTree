@@ -7,7 +7,9 @@ Hosted at [lukestorry.co.uk/waTree-forest](https://lukestorry.co.uk/waTree-fores
 ## ToDo
 - [x] Get D3 set up
 - [x] Make graph with things sized according to data
-- [ ] Sort out sizing - why is it a tiny bit bigger than the window?!
+- [x] Sort out sizing
+- [x] Add in tree image
+- [ ] Change tree image? i.e. make from SVG instead
 - [ ] Add more info on-screen - names etc.
 - [ ] Add interactive stuff - hover over should show more info
 - [ ] Pull in data from Sunny's API
