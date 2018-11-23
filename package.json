@@ -1,9 +1,0 @@
-{
-  "name": "water-forest",
-  "version": "0.2.2",
-  "description": "An interactively-growing forest, for COMSM0009 Interactive Devices",
-  "scripts": {
-    "start": "browser-sync start --server -f -w"
-  },
-  "author": "Luke Storry"
-}
