@@ -48,7 +48,6 @@ class sqlDB {
           console.log(err.message);
         } else if (retRow && retRow.length > 0) {
           console.log(retRow);
-          // TODO: Write back the value into the DB after incrementing it using scoreIncrease
         }
       }
     );
