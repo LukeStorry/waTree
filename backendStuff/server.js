@@ -28,16 +28,17 @@ app.get("/get/:username/", function(req, res) {
   });
 });
 
-app.post("/add/:username/", function(req, res) {
+app.post("/post/:username/", function(req, res) {
   var username = req.params.username;
   db.addUser(username, function() {
     console.log("Added user!");
   });
 });
 
-app.get("/allusers", function(req, res) {
+app.get("/all/", function(req, res) {
   db.getAllUsers(function(returnedRow) {
     console.log(returnedRow);
-    send.json(json.stringify(returnedRow));
+    res.send(JSON.stringify(returnedRow));
+    res.end();
   });
 });

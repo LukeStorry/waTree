@@ -63,7 +63,6 @@ class sqlDB {
       if (err) {
         return console.log(err.message);
       }
-      console.log("A log has been inserted with rowid ${this.lastID}");
       if (callback) {
         callback();
       }
@@ -73,9 +72,10 @@ class sqlDB {
 
   getUser(username, callback) {
     const db = this.openDB();
+    console.log("trying to access a user!");
     let sqlQuery;
     sqlQuery = "SELECT * from UserGroups where UserName = " + username;
-    this.generalQueryHelper(sqlQuery, [username], callback);
+    this.generalQueryHelper(db, sqlQuery, [username], callback);
     this.closeDB(db);
   }
 
@@ -88,6 +88,7 @@ class sqlDB {
   }
 
   getAllUsers(callback) {
+    console.log("Accessed all users! ");
     const db = this.openDB();
     let sqlQuery = "SELECT * FROM UserGroups";
     this.generalQueryHelper(db, sqlQuery, [], callback);
