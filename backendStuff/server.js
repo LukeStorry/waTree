@@ -20,23 +20,25 @@ app.get("/", function(req, res) {
   res.end();
 });
 
-app.get("/users/:username/", function(req, res) {
-  var username = request.params.username;
+app.get("/get/:username/", function(req, res) {
+  var username = req.params.username;
   db.getUser(username, function(returnedRow) {
     console.log(returnedRow);
     send.json(json.stringify(returnedRow));
   });
 });
 
-app.post("/users/:username/", function(req, res) {
-  var username = request.params.username;
+app.post("/post/:username/", function(req, res) {
+  var username = req.params.username;
   db.addUser(username, function() {
     console.log("Added user!");
   });
 });
 
-app.get("/allusers", function(req, res) {
+app.get("/all/", function(req, res) {
   db.getAllUsers(function(returnedRow) {
-    send.json(json.stringify(returnedRow));
+    console.log(returnedRow);
+    res.send(JSON.stringify(returnedRow));
+    res.end();
   });
 });

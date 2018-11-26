@@ -28,7 +28,7 @@ class sqlDB {
   }
 
   setupDataBase() {
-    var db = this.openDB();
+    const db = this.openDB();
     db.serialize(function() {
       db.run(
         "CREATE TABLE IF NOT EXISTS UserGroups(GroupID INTEGER PRIMARY KEY AUTOINCREMENT, UserName TEXT NOT NULL, Score INTEGER)"
@@ -39,7 +39,7 @@ class sqlDB {
   }
 
   addScore(username, scoreIncrease, callback) {
-    var db = this.openDB();
+    const db = this.openDB();
     db.all(
       "SELECT Score score FROM UserGroups WHERE UserName = ?",
       [username],
@@ -56,14 +56,13 @@ class sqlDB {
   }
 
   addUser(username, callback) {
-    var db = this.openDB();
+    const db = this.openDB();
     db.run("INSERT INTO UserGroups(UserName) VALUES(?)", [username], function(
       err
     ) {
       if (err) {
         return console.log(err.message);
       }
-      console.log("A log has been inserted with rowid ${this.lastID}");
       if (callback) {
         callback();
       }
@@ -72,39 +71,42 @@ class sqlDB {
   }
 
   getUser(username, callback) {
-    var db = this.openDB();
-    var sqlQuery;
+    const db = this.openDB();
+    console.log("trying to access a user!");
+    let sqlQuery;
     sqlQuery = "SELECT * from UserGroups where UserName = " + username;
-    db.query(sqlQuery, (error, results, fields) => {
-      if (error) {
-        return console.error(error.message);
-      }
-      callback(results);
-    });
+    this.generalQueryHelper(db, sqlQuery, [username], callback);
     this.closeDB(db);
   }
 
   getScore(username, callback) {
-    var db = this.openDB();
-    var sqlQuery;
+    const db = this.openDB();
+    let sqlQuery;
     sqlQuery = "SELECT Score from UserGroups where UserName = " + username;
-    db.query(sqlQuery, (error, results, fields) => {
-      if (error) {
-        return console.error(error.message);
-      }
-      callback(results);
-    });
+    this.generalQueryHelper(db, sqlQuery, [username], callback);
     this.closeDB(db);
   }
 
   getAllUsers(callback) {
-    var db = this.openDB();
-    var sqlQuery = "SELECT * FROM UserGroups";
-    db.query(sqlQuery, (error, results, fields) => {
-      if (error) {
-        return console.error(error.message);
+    console.log("Accessed all users! ");
+    const db = this.openDB();
+    let sqlQuery = "SELECT * FROM UserGroups";
+    this.generalQueryHelper(db, sqlQuery, [], callback);
+    this.closeDB(db);
+  }
+
+  generalQueryHelper(db, sqlQuery, queryReq, callback) {
+    db.all(sqlQuery, [queryReq], function(err, rows) {
+      if (err) {
+        console.log(err.message);
+      } else {
+        if (callback) {
+          if (rows == []) {
+            console.log("SQL DB returned an empty row\n");
+          }
+          callback(rows);
+        }
       }
-      callback(results);
     });
   }
 }
