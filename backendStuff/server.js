@@ -20,16 +20,16 @@ app.get("/", function(req, res) {
   res.end();
 });
 
-app.get("/users/:username/", function(req, res) {
-  var username = request.params.username;
+app.get("/get/:username/", function(req, res) {
+  var username = req.params.username;
   db.getUser(username, function(returnedRow) {
     console.log(returnedRow);
     send.json(json.stringify(returnedRow));
   });
 });
 
-app.post("/users/:username/", function(req, res) {
-  var username = request.params.username;
+app.post("/add/:username/", function(req, res) {
+  var username = req.params.username;
   db.addUser(username, function() {
     console.log("Added user!");
   });
@@ -37,6 +37,7 @@ app.post("/users/:username/", function(req, res) {
 
 app.get("/allusers", function(req, res) {
   db.getAllUsers(function(returnedRow) {
+    console.log(returnedRow);
     send.json(json.stringify(returnedRow));
   });
 });
