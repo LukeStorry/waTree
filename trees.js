@@ -13,9 +13,7 @@ var treeGraph = d3.select('svg')
   .attr("width", graphWidth)
   .attr("height", graphHeight);
 
-var biggestTreeSize = treeData.reduce(function(biggest, next) {
-  return biggest.size > next.size ? biggest : next;
-}).size;
+var biggestTreeSize = Math.max.apply(null, treeData.map(function(tree){return tree.size}));
 
 // TODO normalise the incoming data instead of growing trees according to largest
 var scaleFactor = graphHeight / (biggestTreeSize * 1.2);
@@ -35,10 +33,23 @@ treeGraph.append("defs")
      .attr('width', 1)
      .attr('height', 1);
 
-var barChart = treeGraph.selectAll("rect")
-  .data(treeData)
-  .enter()
-  .append("rect")
+var tree = treeGraph.selectAll("g")
+    .data(treeData)
+    .enter()
+    .append("g")
+    .attr("transform", function(tree, i) {
+        return "translate(" + [treeWidth * i + barPadding / 2, 0] + ")";
+    })
+
+tree.append("text")
+  .attr("y", 20)
+  .attr("x", treeWidth/2)
+  .attr("text-anchor", "middle")
+  .attr("dominant-baseline", "middle")
+  .attr("width", treeWidth - barPadding)
+  .text(function(d) { return d.name; });
+
+tree.append("rect")
   .attr("y", function(d) {
     return (graphHeight - (d.size * scaleFactor));
   })
@@ -46,7 +57,4 @@ var barChart = treeGraph.selectAll("rect")
     return (tree.size * scaleFactor);
   })
   .attr("width", treeWidth - barPadding)
-  .attr("transform", function(tree, i) {
-    return "translate(" + [treeWidth * i + barPadding / 2, 0] + ")";
-  })
   .attr("fill", "url(#bg)");
