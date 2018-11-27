@@ -7,6 +7,10 @@ const db = new sqlDB("./user_data.db");
 var http = require("http");
 var app = express();
 app.use(bodyParser.json());
+app.use(function(req, res, next) {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    return next();
+  });
 
 var httpServer = http.createServer(app);
 

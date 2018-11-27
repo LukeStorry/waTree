@@ -1,3 +1,8 @@
+d3.json("http://localhost:3030/all")
+.then(function(data){
+  console.log(data);
+});
+
 var treeData = [{name:"Aleena", size:5,  species:"Small",  item:[]},
                 {name:"Rae",    size:12, species:"Big",    item:["glasses", "hat"]},
                 {name:"Sunny",  size:8,  species:"Medium", item:["glasses"]},
