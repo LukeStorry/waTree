@@ -2,6 +2,18 @@
 
 const sqlite3 = require("sqlite3").verbose();
 
+/***
+ * Plan:
+ *  - Change the path to be a folder of DBs
+ *  - Change the way to access / open DBs
+ *  - --- openDB() takes NAME
+ *  -  Username = name of the DB.
+ *  - All of the DB functions take in username, and use the username to access the db.
+ *  - ?? No more this.db??!?!?
+ *  -- Is this even a constructor anymore?
+ *
+ */
+
 class sqlDB {
   constructor(dbLocation) {
     this.dbLocation = dbLocation;
@@ -9,7 +21,7 @@ class sqlDB {
   }
 
   openDB() {
-    const db = new sqlite3.Database(this.dbLocation, err => {
+    var db = new sqlite3.Database(this.dbLocation, err => {
       if (err) {
         return console.error(err.message);
       }
@@ -26,12 +38,11 @@ class sqlDB {
       console.log("closed the db");
     });
   }
-
   setupDataBase() {
     const db = this.openDB();
     db.serialize(function() {
       db.run(
-        "CREATE TABLE IF NOT EXISTS UserGroups(GroupID INTEGER PRIMARY KEY AUTOINCREMENT, UserName TEXT NOT NULL, Score INTEGER)"
+        "CREATE TABLE IF NOT EXISTS AllUserTable(UserName TEXT NOT NULL, Score INTEGER)"
       );
       // db.run('') # Do we need a table for items yet?
     });
@@ -40,32 +51,25 @@ class sqlDB {
 
   addScore(username, scoreIncrease, callback) {
     const db = this.openDB();
-    db.all(
-      "SELECT Score score FROM UserGroups WHERE UserName = ?",
-      [username],
-      function(err, retRow) {
-        if (err) {
-          console.log(err.message);
-        } else if (retRow && retRow.length > 0) {
-          console.log(retRow);
-        }
-      }
-    );
-    this.closeDB();
+    let query = "SELECT Score score FROM UserGroups WHERE UserName = ?";
+    this.generalQueryHelper(db, query, [username], function(returnedRow) {
+      console.log(returnedRow);
+    });
+    this.closeDB(db);
   }
+
+  /*
+    if(user NOT EXIST ):
+      Add user :
+      - Username -> USERS
+      - Create Username table -> (TIMESTAMPS)  
+    AddTimestamp to Username (TIMESTAMPS TABLE)
+    */
 
   addUser(username, callback) {
     const db = this.openDB();
-    db.run("INSERT INTO UserGroups(UserName) VALUES(?)", [username], function(
-      err
-    ) {
-      if (err) {
-        return console.log(err.message);
-      }
-      if (callback) {
-        callback();
-      }
-    });
+    let query = "INSERT INTO UserGroups(UserName) VALUES(?)";
+    this.generalQueryHelper(db, query, [username], callback);
     this.closeDB(db);
   }
 
