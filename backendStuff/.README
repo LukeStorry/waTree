@@ -1,8 +1,0 @@
-To test the api using curl
-
-gets:
-"curl localhost:3030/all/" will get you all users as an example
-
-posts:
-"curl -i -x POST localhost:3030/post/potato/500/" will POST a user potato with a score 500
-use POST for res.post( and PUT for res.put(
