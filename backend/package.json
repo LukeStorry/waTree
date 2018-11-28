@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "run": "node server.js",
-    "deploy": "cd ..; git subtree push --prefix ./backend/ heroku master; cd backend;"
+    "deploy": "cd .. && git subtree push --prefix backend/ heroku master && cd backend"
 
   },
   "author": "Sunny Miglani, Luke Storry",
