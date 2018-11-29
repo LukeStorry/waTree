@@ -23,8 +23,8 @@ int prevAccY = 10;
 bool turnPoint = false;
 int turnCount = -1;
 
-#define PIN 13
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(60, PIN, NEO_GRB + NEO_KHZ800);
+#define PIN 14
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(9, PIN, NEO_GRB + NEO_KHZ800);
 
 void setup(void) {
 #ifndef ESP8266
@@ -72,6 +72,46 @@ void check_for_button_press(){
   }
 }
 
+void rainbow(uint8_t wait) {
+  uint16_t i, j;
+
+  for(j=0; j<256; j++) {
+    for(i=0; i<strip.numPixels(); i++) {
+      strip.setPixelColor(i, Wheel((i+j) & 255));
+    }
+    strip.show();
+    delay(wait);
+  }
+}
+
+// Slightly different, this makes the rainbow equally distributed throughout
+void rainbowCycle(uint8_t wait) {
+  uint16_t i, j;
+
+  for(j=0; j<256*5; j++) { // 5 cycles of all colors on wheel
+    for(i=0; i< strip.numPixels(); i++) {
+      strip.setPixelColor(i, Wheel(((i * 256 / strip.numPixels()) + j) & 255));
+    }
+    strip.show();
+    delay(wait);
+  }
+}
+
+// Input a value 0 to 255 to get a color value.
+// The colours are a transition r - g - b - back to r.
+uint32_t Wheel(byte WheelPos) {
+  WheelPos = 255 - WheelPos;
+  if(WheelPos < 85) {
+    return strip.Color(255 - WheelPos * 3, 0, WheelPos * 3);
+  }
+  if(WheelPos < 170) {
+    WheelPos -= 85;
+    return strip.Color(0, WheelPos * 3, 255 - WheelPos * 3);
+  }
+  WheelPos -= 170;
+  return strip.Color(WheelPos * 3, 255 - WheelPos * 3, 0);
+}
+
 void check_for_drink(){
   
   if(accelerationY <= 7){
@@ -104,23 +144,27 @@ void check_for_drink(){
   }
 }
 
-static void chase(uint32_t c) {
-  for(uint16_t i=0; i<strip.numPixels()+4; i++) {
-      strip.setPixelColor(i  , c); // Draw new pixel
-      strip.setPixelColor(i-4, 0); // Erase pixel a few steps back
-      strip.show();
-      delay(25);
+// Fill the dots one after the other with a color
+void colorWipe(uint32_t c, uint8_t wait) {
+  for(uint16_t i=0; i<strip.numPixels(); i++) {
+    strip.setPixelColor(i, c);
+    strip.show();
+    delay(wait);
   }
 }
 
+
 void loop() {
-  for(uint16_t i=0; i<strip.numPixels(); i++) {
-    strip.setPixelColor(i, 100, 100, 100);
-  }
+//  for(uint16_t i=0; i<strip.numPixels(); i++) {
+//    strip.setPixelColor(i, 100, 100, 100);
+//  }
   
-//  chase(strip.Color(255, 0, 0)); // Red
-//  chase(strip.Color(0, 255, 0)); // Green
-//  chase(strip.Color(0, 0, 255)); // Blue
+//  colorWipe(strip.Color(255, 0, 0), 50); // Red
+//  colorWipe(strip.Color(0, 255, 0), 50); // Green
+//  colorWipe(strip.Color(0, 0, 255), 50); // Blue
+
+   rainbow(20);
+  rainbowCycle(20);
   
   sensors_event_t event; 
   lis.getEvent(&event);
