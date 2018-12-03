@@ -23,10 +23,10 @@ void loop() {
 // 
 //   HTTPClient http;    //Declare object of class HTTPClient
 // 
-//   http.begin("https://lukestorry.co.uk/waTree-forest/");  //Specify request destination
-//   http.addHeader("Content-Type", "text/plain");  //Specify content-type header
+//   http.begin("https://lukestorry.co.uk/has-drunk/potato/500/");  //Specify request destination
+//   http.addHeader("Content-Type", "application/x-www-form-urlencoded");  //Specify content-type header
 // 
-//   int httpCode = http.POST("Tilted");                 //Send the request
+//   int httpCode = http.POST("");                 //Send the request
 //   String payload = http.getString();                  //Get the response payload
 // 
 //   Serial.println(httpCode);   //Print HTTP return code
