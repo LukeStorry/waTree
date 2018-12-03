@@ -50,7 +50,7 @@ app.get("/add/:username/", function(req, res) {
 app.get("/has-drunk/:username/", function(req, res) {
   var username = req.params.username;
   dhini.drinkWater(username, function() {
-    console.log("Potato");
+    console.log(username, " has drank water!");
   });
   res.writeHead(200);
   res.send();
