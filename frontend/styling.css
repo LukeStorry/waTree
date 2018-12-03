@@ -5,17 +5,14 @@ html, body {
   margin: 0;
 }
 
-svg {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
 text {
   font-size: 14px;
   font-family: "Arial", sans-serif;
 }
 
-/* rect {
-  fill: steelBlue;
-} */
+.wrapper {
+  display: grid;
+  width: 100vw;
+  height: 100vh;
+  grid-template-rows: 10fr 15fr 80fr;
+}
