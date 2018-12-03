@@ -5,35 +5,16 @@ html, body {
   margin: 0;
 }
 
-/* svg {
+svg {
   position: absolute;
   top: 0;
   left: 0;
-} */
+}
 
 text {
   font-size: 14px;
   font-family: "Arial", sans-serif;
 }
-
-.wrapper {
-  display: grid;
-  width: 100vw;
-  height: 100vh;
-  grid-template-rows: 10fr 15fr 80fr;
-}
-
-/* #nameRow {
-  background-color: blue;
-}
-
-#rainRow {
-  background-color: pink;
-} */
-
-/* #treesRow {
-  background-color: orange;
-} */
 
 /* rect {
   fill: steelBlue;
