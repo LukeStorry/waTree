@@ -58,13 +58,13 @@ void flash(uint32_t c, uint8_t wait){
 void setup(void) {
 
   //  Serial.begin(115200);                 //Serial connection
-  //  WiFi.begin("sunnyPC", "54nU0sCh");   //WiFi connection
-  // 
-  //  while (WiFi.status() != WL_CONNECTED) {  //Wait for the WiFI connection completion
-  // 
-  //    delay(500);
-  //    Serial.println("Waiting for connection");
-  // 
+    WiFi.begin("sunnyPC", "54nU0sCh");   //WiFi connection
+   
+    while (WiFi.status() != WL_CONNECTED) {  //Wait for the WiFI connection completion
+   
+      delay(500);
+      Serial.println("Waiting for connection");
+    }
 #ifndef ESP8266
   while (!Serial);     // will pause Zero, Leonardo, etc until serial console opens
 #endif
@@ -115,6 +115,36 @@ void check_for_button_press(){
   }
 }
 
+void upon_drink(){
+  
+  flash(strip.Color(0, 255, 0), 200);
+  
+  Serial.println("--------------------------------------------------");
+  Serial.println("Person has had water");
+  Serial.print("--------------------------------------------------");
+  
+//  if(WiFi.status()== WL_CONNECTED){   //Check WiFi connection status
+//   
+//     HTTPClient http;    //Declare object of class HTTPClient
+//   
+//     http.begin("https://lukestorry.co.uk/waTree-forest/");  //Specify request destination
+//     http.addHeader("Content-Type", "text/plain");  //Specify content-type header
+//   
+//     int httpCode = http.POST("Tilted");                 //Send the request
+//     String payload = http.getString();                  //Get the response payload
+//   
+//     Serial.println(httpCode);   //Print HTTP return code
+//     Serial.println(payload);    //Print request response payload
+//   
+//     http.end();  //Close connection
+//   
+//   }else{
+//   
+//      Serial.println("Error in WiFi connection");   
+//   
+//   }
+}
+
 void check_for_drink(){
   
   if(accelerationY <= 7){
@@ -138,10 +168,7 @@ void check_for_drink(){
     int lowerBound = turnCount - 10;
     
     if((approxTurnCount < upperBound) && (approxTurnCount > lowerBound)){
-      flash(strip.Color(0, 255, 0), 200);
-      Serial.println("--------------------------------------------------");
-      Serial.println("Person has had water");
-      Serial.print("--------------------------------------------------");
+      upon_drink();
     }
     
     timing = 0;
@@ -170,26 +197,5 @@ void loop() {
     count = 0;
     accelerationY = 0;
   }
-  // if(WiFi.status()== WL_CONNECTED){   //Check WiFi connection status
-  // 
-  //   HTTPClient http;    //Declare object of class HTTPClient
-  // 
-  //   http.begin("https://lukestorry.co.uk/waTree-forest/");  //Specify request destination
-  //   http.addHeader("Content-Type", "text/plain");  //Specify content-type header
-  // 
-  //   int httpCode = http.POST("Tilted");                 //Send the request
-  //   String payload = http.getString();                  //Get the response payload
-  // 
-  //   Serial.println(httpCode);   //Print HTTP return code
-  //   Serial.println(payload);    //Print request response payload
-  // 
-  //   http.end();  //Close connection
-  // 
-  // }else{
-  // 
-  //    Serial.println("Error in WiFi connection");   
-  // 
-  // }
-  // 
-  //  delay(30000);  //Send a request every 30 seconds
+ 
 }
