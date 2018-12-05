@@ -12,7 +12,7 @@ app.use(function(req, res, next) {
 });
 
 var httpServer = http.createServer(app);
-var port = process.env.PORT || 5000;
+var port = process.env.PORT || 5050;
 httpServer.listen(port, function() {
   console.log("HTTP server listening on port", port);
 });
@@ -25,8 +25,8 @@ app.get("/test/", function(req, res) {
 
 app.get("/", function(req, res) {
   console.log("returning All!");
-  db.returnAll(function(rows) {
-    res.send(JSON.stringify(rows));
+  db.getScores(function(scoresList) {
+    res.send(JSON.stringify(scoresList));
     res.end();
   });
 });

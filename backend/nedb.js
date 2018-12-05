@@ -23,7 +23,8 @@ function insertUser(name) {
 }
 
 function drinkWater(name, callback) {
-  var thisTimestamp = new Date().toLocaleString();
+  var thisTimestamp = Math.floor(Date.now() / 1000)
+
   db.update({ name: name }, { $push: { drinks: thisTimestamp } }, { upsert: true },
     function () {
       console.log('added timestamp', thisTimestamp, 'to', name);
@@ -32,14 +33,31 @@ function drinkWater(name, callback) {
   );
 }
 
-function returnAll(callback) {
-  db.find({}, function (err, docs) {
-    callback(docs);
-  });
+function getScores(callback) {
+  db.find({}, function (err, rows) {
+    var scoresList = [];
+    console.log(rows);
+    rows.forEach(function(row){
+      var score = 30;
+      var now = 1 + Math.floor(Date.now() / 1000); // needs +1 to avoid zero division
+      row.drinks.forEach(function(drink){
+        score += 100 / Math.sqrt(now - drink);
+      });
+      console.log(row.name, 'score:', score);
+      score = Math.min(score, 100)
+      scoresList.push({
+        'UserName': row.name,
+        'Score': score,
+        'isRaining': (now - 3 < row.drinks[row.drinks.length - 1]),
+      });
+    });
+  console.log(scoresList);
+  callback(scoresList);
+});
 }
 
 module.exports = {
   insertUser,
   drinkWater,
-  returnAll,
+  getScores,
 };
