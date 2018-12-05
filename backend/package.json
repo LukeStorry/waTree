@@ -1,18 +1,17 @@
 {
-  "name": "watree-backend",
-  "version": "0.8.0",
-  "description": "Backend & API for the watree forest, using MongoDB to storing the data about users, using POST/GET requests to interact with the hardware on the bottles and the front end",
+  "name": "backend-watree-forest",
+  "version": "1.0.0",
+  "description": "Backend / API for the watree forest, will use mysql for storing the data about users, using post/get requests to interact with the hardware on the bottles",
   "main": "index.js",
   "scripts": {
-    "run": "node server.js",
-    "deploy": "cd .. && git subtree push --prefix backend/ heroku master && cd backend"
-
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Sunny Miglani, Luke Storry",
-  "private": true,
+  "author": "Sunny Miglani",
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4",
+    "mongodb": "^3.1.10",
+    "nedb": "^1.8.0",
     "sqlite3": "^4.0.4"
   }
 }

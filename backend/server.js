@@ -2,15 +2,10 @@
 
 var express = require("express");
 var bodyParser = require("body-parser");
-const sqlDB = require("./sqlDB.js");
-const db = new sqlDB("./user_data.db");
+var dhini = require("./nedb.js");
 var http = require("http");
 var app = express();
 app.use(bodyParser.json());
-app.use(function(req, res, next) {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    return next();
-  });
 
 var httpServer = http.createServer(app);
 
@@ -18,37 +13,45 @@ httpServer.listen(3030, function() {
   console.log("Example app listening on port 3030");
 });
 
-app.get("/", function(req, res) {
-  console.log("potato");
+app.get("/test/", function(req, res) {
+  console.log("Alive Test");
   res.writeHead(200);
   res.end();
 });
 
-app.get("/get/:username/", function(req, res) {
-  var username = req.params.username;
-  db.getUser(username, function(returnedRow) {
-    console.log(returnedRow);
-    res.send(JSON.stringify(returnedRow));
+app.get("/", function(req, res) {
+  console.log("returning All!");
+  dhini.returnAll(function(rows) {
+    res.send(JSON.stringify(rows));
     res.end();
   });
 });
 
-app.post("/post/:username/:score/", function(req, res) {
+/*
+    {
+      name:potato;
+      score: 73; // %%%%%%%%%%% ?? -- Height of the tree
+      raining: false; //? : Drank in the last 2 seconds -- animation 
+    }
+  
+
+*/
+
+app.put("/add/:username/", function(req, res) {
+  console.log("returning for a particular user!");
   var username = req.params.username;
-  var score = req.params.score;
-  console.log(username);
-  console.log(score);
-  db.addUser(username, function() {
-    console.log("Added user!");
+  dhini.insertUser(username);
+  dhini.drinkWater(username, function() {
+    res.writeHead(200);
+    res.end();
+  });
+});
+
+app.put("/has-drunk/:username/", function(req, res) {
+  var username = req.params.username;
+  dhini.drinkWater(username, function() {
+    console.log(username, " has drank water!");
   });
   res.writeHead(200);
   res.send();
-});
-
-app.get("/all/", function(req, res) {
-  db.getAllUsers(function(returnedRow) {
-    console.log(returnedRow);
-    res.send(JSON.stringify(returnedRow));
-    res.end();
-  });
 });
