@@ -6,15 +6,15 @@ var db = require('./nedb.js');
 var http = require('http');
 var app = express();
 app.use(bodyParser.json());
-app.use(function(req, res, next) {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    return next();
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  return next();
 });
 
 var httpServer = http.createServer(app);
-
-httpServer.listen(3000, function () {
-  console.log('HTTP server listening on port 3000');
+var port = (process.env.PORT || 5000);
+httpServer.listen(port, function () {
+  console.log('HTTP server listening on port', port);
 });
 
 app.get('/test/', function (req, res) {
@@ -42,7 +42,7 @@ app.get('/', function (req, res) {
 
 app.put('/add/:username/', function (req, res) {
   var username = req.params.username;
-  console.log(username + ' is being added.');
+  console.log(username, 'is being added.');
   db.insertUser(username);
   db.drinkWater(username, function () {
     res.writeHead(200);

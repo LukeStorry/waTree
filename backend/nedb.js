@@ -17,7 +17,7 @@ function insertUser(name) {
       return console.log(err);
     }
 
-    console.log('Inserted a new user to db' + name);
+    console.log('Inserted a new user to db', name);
     return newDoc._id;
   });
 }
@@ -26,7 +26,7 @@ function drinkWater(name, callback) {
   var thisTimestamp = new Date().toLocaleString();
   db.update({ name: name }, { $push: { drinks: thisTimestamp } }, { upsert: true },
     function () {
-      console.log('added timestamp' + thisTimestamp + ' to ' + name);
+      console.log('added timestamp', thisTimestamp, 'to', name);
       callback();
     }
   );
