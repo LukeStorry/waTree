@@ -1,31 +1,31 @@
-'use strict';
+"use strict";
 
-var express = require('express');
-var bodyParser = require('body-parser');
-var db = require('./nedb.js');
-var http = require('http');
+var express = require("express");
+var bodyParser = require("body-parser");
+var db = require("./nedb.js");
+var http = require("http");
 var app = express();
 app.use(bodyParser.json());
-app.use(function (req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+app.use(function(req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   return next();
 });
 
 var httpServer = http.createServer(app);
-var port = (process.env.PORT || 5000);
-httpServer.listen(port, function () {
-  console.log('HTTP server listening on port', port);
+var port = process.env.PORT || 5000;
+httpServer.listen(port, function() {
+  console.log("HTTP server listening on port", port);
 });
 
-app.get('/test/', function (req, res) {
-  console.log('Alive Test');
+app.get("/test/", function(req, res) {
+  console.log("Alive Test");
   res.writeHead(200);
   res.end();
 });
 
-app.get('/', function (req, res) {
-  console.log('returning All!');
-  db.returnAll(function (rows) {
+app.get("/", function(req, res) {
+  console.log("returning All!");
+  db.returnAll(function(rows) {
     res.send(JSON.stringify(rows));
     res.end();
   });
@@ -40,20 +40,20 @@ app.get('/', function (req, res) {
 
 */
 
-app.put('/add/:username/', function (req, res) {
+app.get("/add/:username/", function(req, res) {
   var username = req.params.username;
-  console.log(username, 'is being added.');
+  console.log(username, "is being added.");
   db.insertUser(username);
-  db.drinkWater(username, function () {
+  db.drinkWater(username, function() {
     res.writeHead(200);
     res.end();
   });
 });
 
-app.put('/has-drunk/:username/', function (req, res) {
+app.get("/has-drunk/:username/", function(req, res) {
   var username = req.params.username;
-  db.drinkWater(username, function () {
-    console.log(username, ' has drank water!');
+  db.drinkWater(username, function() {
+    console.log(username, " has drank water!");
   });
 
   res.writeHead(200);
