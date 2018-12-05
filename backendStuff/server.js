@@ -37,7 +37,7 @@ app.get("/", function(req, res) {
 
 */
 
-app.get("/add/:username/", function(req, res) {
+app.put("/add/:username/", function(req, res) {
   console.log("returning for a particular user!");
   var username = req.params.username;
   dhini.insertUser(username);
@@ -47,7 +47,7 @@ app.get("/add/:username/", function(req, res) {
   });
 });
 
-app.get("/has-drunk/:username/", function(req, res) {
+app.put("/has-drunk/:username/", function(req, res) {
   var username = req.params.username;
   dhini.drinkWater(username, function() {
     console.log(username, " has drank water!");
