@@ -6,6 +6,10 @@ var dhini = require("./nedb.js");
 var http = require("http");
 var app = express();
 app.use(bodyParser.json());
+app.use(function(req, res, next) {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    return next();
+});
 
 var httpServer = http.createServer(app);
 
@@ -31,9 +35,9 @@ app.get("/", function(req, res) {
     {
       name:potato;
       score: 73; // %%%%%%%%%%% ?? -- Height of the tree
-      raining: false; //? : Drank in the last 2 seconds -- animation 
+      raining: false; //? : Drank in the last 2 seconds -- animation
     }
-  
+
 
 */
 
