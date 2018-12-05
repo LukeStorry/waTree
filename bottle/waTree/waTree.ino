@@ -1,9 +1,13 @@
+#include <ESP8266HTTPClient.h>
+#include <ESP8266WiFi.h>
 #include <Wire.h>
 #include <SPI.h>
 #include <Adafruit_LIS3DH.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_NeoPixel.h>
 
+
+HTTPClient http;
 Adafruit_LIS3DH lis = Adafruit_LIS3DH();
 
 #if defined(ARDUINO_ARCH_SAMD)
@@ -26,7 +30,41 @@ int turnCount = -1;
 #define PIN 14
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(9, PIN, NEO_GRB + NEO_KHZ800);
 
+// Fill the dots one after the other with a color
+void colorWipe(uint32_t c, uint8_t wait) {
+  for(uint16_t i=0; i<strip.numPixels(); i++) {
+    strip.setPixelColor(i, c);
+    strip.show();
+    delay(wait);
+  }
+}
+
+void flash(uint32_t c, uint8_t wait){
+  for(int j=0; j<3; j++){
+    for(uint16_t i=0; i<strip.numPixels(); i++) {
+      strip.setPixelColor(i, c);
+    }
+    strip.show();
+    delay(wait);
+    for(uint16_t i=0; i<strip.numPixels(); i++) {
+      strip.setPixelColor(i, strip.Color(0, 0, 0));
+    }
+    strip.show();
+    delay(wait);
+  }
+  colorWipe(strip.Color(0, 0, 0), 50); // Clear
+}
+
 void setup(void) {
+
+  //  Serial.begin(115200);                 //Serial connection
+  //  WiFi.begin("sunnyPC", "54nU0sCh");   //WiFi connection
+  // 
+  //  while (WiFi.status() != WL_CONNECTED) {  //Wait for the WiFI connection completion
+  // 
+  //    delay(500);
+  //    Serial.println("Waiting for connection");
+  // 
 #ifndef ESP8266
   while (!Serial);     // will pause Zero, Leonardo, etc until serial console opens
 #endif
@@ -51,6 +89,7 @@ void setup(void) {
 
   strip.begin();
   strip.show(); 
+  colorWipe(strip.Color(0, 0, 0), 50); // Clear
 }
 
 void check_for_button_press(){
@@ -60,8 +99,10 @@ void check_for_button_press(){
     Serial.println("\nButton pressed");
     buttonStatus = !buttonStatus;
     if(buttonStatus){
+      colorWipe(strip.Color(0, 0, 255), 50); // Blue
       Serial.println("You may now drink");
     } else {
+      colorWipe(strip.Color(255, 0, 0), 50); // Red
       Serial.println("You can no longer drink");
     }
     
@@ -69,47 +110,9 @@ void check_for_button_press(){
       //Do Nothing
       delay(10);
     }
+    delay(500);
+    colorWipe(strip.Color(0, 0, 0), 50); // Clear
   }
-}
-
-void rainbow(uint8_t wait) {
-  uint16_t i, j;
-
-  for(j=0; j<256; j++) {
-    for(i=0; i<strip.numPixels(); i++) {
-      strip.setPixelColor(i, Wheel((i+j) & 255));
-    }
-    strip.show();
-    delay(wait);
-  }
-}
-
-// Slightly different, this makes the rainbow equally distributed throughout
-void rainbowCycle(uint8_t wait) {
-  uint16_t i, j;
-
-  for(j=0; j<256*5; j++) { // 5 cycles of all colors on wheel
-    for(i=0; i< strip.numPixels(); i++) {
-      strip.setPixelColor(i, Wheel(((i * 256 / strip.numPixels()) + j) & 255));
-    }
-    strip.show();
-    delay(wait);
-  }
-}
-
-// Input a value 0 to 255 to get a color value.
-// The colours are a transition r - g - b - back to r.
-uint32_t Wheel(byte WheelPos) {
-  WheelPos = 255 - WheelPos;
-  if(WheelPos < 85) {
-    return strip.Color(255 - WheelPos * 3, 0, WheelPos * 3);
-  }
-  if(WheelPos < 170) {
-    WheelPos -= 85;
-    return strip.Color(0, WheelPos * 3, 255 - WheelPos * 3);
-  }
-  WheelPos -= 170;
-  return strip.Color(WheelPos * 3, 255 - WheelPos * 3, 0);
 }
 
 void check_for_drink(){
@@ -135,6 +138,7 @@ void check_for_drink(){
     int lowerBound = turnCount - 10;
     
     if((approxTurnCount < upperBound) && (approxTurnCount > lowerBound)){
+      flash(strip.Color(0, 255, 0), 200);
       Serial.println("--------------------------------------------------");
       Serial.println("Person has had water");
       Serial.print("--------------------------------------------------");
@@ -144,27 +148,7 @@ void check_for_drink(){
   }
 }
 
-// Fill the dots one after the other with a color
-void colorWipe(uint32_t c, uint8_t wait) {
-  for(uint16_t i=0; i<strip.numPixels(); i++) {
-    strip.setPixelColor(i, c);
-    strip.show();
-    delay(wait);
-  }
-}
-
-
 void loop() {
-//  for(uint16_t i=0; i<strip.numPixels(); i++) {
-//    strip.setPixelColor(i, 100, 100, 100);
-//  }
-  
-//  colorWipe(strip.Color(255, 0, 0), 50); // Red
-//  colorWipe(strip.Color(0, 255, 0), 50); // Green
-//  colorWipe(strip.Color(0, 0, 255), 50); // Blue
-
-   rainbow(20);
-  rainbowCycle(20);
   
   sensors_event_t event; 
   lis.getEvent(&event);
@@ -186,8 +170,26 @@ void loop() {
     count = 0;
     accelerationY = 0;
   }
-
-  
- 
-  delay(20); 
+  // if(WiFi.status()== WL_CONNECTED){   //Check WiFi connection status
+  // 
+  //   HTTPClient http;    //Declare object of class HTTPClient
+  // 
+  //   http.begin("https://lukestorry.co.uk/waTree-forest/");  //Specify request destination
+  //   http.addHeader("Content-Type", "text/plain");  //Specify content-type header
+  // 
+  //   int httpCode = http.POST("Tilted");                 //Send the request
+  //   String payload = http.getString();                  //Get the response payload
+  // 
+  //   Serial.println(httpCode);   //Print HTTP return code
+  //   Serial.println(payload);    //Print request response payload
+  // 
+  //   http.end();  //Close connection
+  // 
+  // }else{
+  // 
+  //    Serial.println("Error in WiFi connection");   
+  // 
+  // }
+  // 
+  //  delay(30000);  //Send a request every 30 seconds
 }
