@@ -31,29 +31,22 @@ app.get("/", function(req, res) {
   });
 });
 
-/*
-    {
-      name:potato;
-      score: 73; // %%%%%%%%%%% ?? -- Height of the tree
-      raining: false; //? : Drank in the last 2 seconds -- animation
-    }
-
-*/
+app.get("/reset/:names/", function(req, res) {
+  var names = req.params.names;
+  console.log("all usernames are being replaced by", names);
+  db.resetNames(names);
+});
 
 app.get("/add/:username/", function(req, res) {
   var username = req.params.username;
   console.log(username, "is being added.");
-  db.insertUser(username);
-  db.drinkWater(username, function() {
-    res.writeHead(200);
-    res.end();
-  });
+  db.addUser(username);
 });
 
-app.get("/has-drunk/:username/", function(req, res) {
-  var username = req.params.username;
-  db.drinkWater(username, function() {
-    console.log(username, " has drank water!");
+app.get("/has-drunk/:number/", function(req, res) {
+  var number = parseInt(req.params.number);
+  db.drinkWater(number, function() {
+    console.log("user", number, "has drank water!");
   });
 
   res.writeHead(200);

@@ -1,2 +1,15 @@
-{"name":"tomato","drinks":[1544040007,1544040009],"_id":"TMTTZTO1isdboytD"}
-{"name":"potato","drinks":[1544039974,1544039989,1544039993],"_id":"o8ISvnIukaTBfjrd"}
+{"number":2,"name":"carrot","drinks":[],"_id":"54680N8ZSGavTnK3"}
+{"number":1,"name":"potato","drinks":[],"_id":"a7FusINbzQkOpCrP"}
+{"number":"2","drinks":[1544089086,1544089088,1544089089,1544089089],"_id":"eyQBPaERCRT2nn72"}
+{"number":0,"name":"tomato","drinks":[],"_id":"iOnxZnqNFEmKzcQz"}
+{"number":3,"name":"fred","drinks":[],"_id":"xCJdLLLOvoSNYADi"}
+{"number":"5","drinks":[1544089091],"_id":"zdVkf9Z3wFEO2HUc"}
+{"$$deleted":true,"_id":"54680N8ZSGavTnK3"}
+{"$$deleted":true,"_id":"a7FusINbzQkOpCrP"}
+{"$$deleted":true,"_id":"eyQBPaERCRT2nn72"}
+{"$$deleted":true,"_id":"iOnxZnqNFEmKzcQz"}
+{"$$deleted":true,"_id":"xCJdLLLOvoSNYADi"}
+{"$$deleted":true,"_id":"zdVkf9Z3wFEO2HUc"}
+{"number":0,"name":"potato","drinks":[],"_id":"y6dVA1fjgb6gayqI"}
+{"number":1,"name":"tomato","drinks":[],"_id":"iy07GeIjNpa3zA7V"}
+{"number":2,"name":"fred","drinks":[],"_id":"y6As5rajnkphTP3X"}

@@ -7,57 +7,87 @@ let db = new Nedb({
   autoload: true,
 });
 
-function insertUser(name) {
-  let doc = {
-    name: name,
-    drinks: [],
-  };
-  db.insert(doc, function (err, newDoc) {
-    if (err) {
-      return console.log(err);
-    }
+function resetNames(usernames) {
+  db.remove({}, { multi: true }, function(err, numRemoved) {});
+  var namesArray = usernames.split(',');
+  var newDB = [];
+  for (var i = 0; i < namesArray.length; i++) {
+    newDB.push({
+      number: i,
+      name: namesArray[i],
+      drinks: [],
+    });
+  }
+  db.insert(newDB, function(err, newDocs){
+    console.log("Reset DB with new docs:");
+    console.log(newDocs);
+  })
+}
 
-    console.log('Inserted a new user to db', name);
-    return newDoc._id;
+function createNewDoc(username, callback) {
+  db.find({}, function(err, users) {
+    var userNum;
+    var numberArray = users.map(function(u) { return u.number; });
+    for (userNum = 0; userNum < users.length + 1; userNum++) {
+      console.log(userNum);
+      if (!numberArray.includes(userNum)) {
+        break;
+      }
+    }
+    var doc = {
+      number: userNum,
+      name: username,
+      drinks: [],
+    };
+    callback(doc);
   });
 }
 
-function drinkWater(name, callback) {
+function addUser(username) {
+  createNewDoc(username, function(doc) {
+    db.insert(doc, function(err, newDoc) {
+      console.log('Inserted a new user to db:', newDoc);
+    });
+  })
+}
+
+function drinkWater(number, callback) {
   var thisTimestamp = Math.floor(Date.now() / 1000)
 
-  db.update({ name: name }, { $push: { drinks: thisTimestamp } }, { upsert: true },
-    function () {
-      console.log('added timestamp', thisTimestamp, 'to', name);
+  db.update({ number: number }, { $push: { drinks: thisTimestamp } },
+    function() {
+      console.log('added timestamp', thisTimestamp, 'to user', number);
       callback();
     }
   );
 }
 
 function getScores(callback) {
-  db.find({}, function (err, rows) {
+  db.find({}, function(err, users) {
     var scoresList = [];
-    console.log(rows);
-    rows.forEach(function(row){
+    console.log(users);
+    users.forEach(function(user) {
       var score = 30;
       var now = 1 + Math.floor(Date.now() / 1000); // needs +1 to avoid zero division
-      row.drinks.forEach(function(drink){
+      user.drinks.forEach(function(drink) {
         score += 100 / Math.sqrt(now - drink);
       });
-      console.log(row.name, 'score:', score);
-      score = Math.min(score, 100)
+      console.log(user.name, 'score:', score);
       scoresList.push({
-        'UserName': row.name,
-        'Score': score,
-        'isRaining': (now - 3 < row.drinks[row.drinks.length - 1]),
+        'User': user.number,
+        'UserName': user.name,
+        'Score': Math.floor(Math.min(score, 100)),
+        'isRaining': (now - 3 < user.drinks[user.drinks.length - 1]),
       });
     });
-  console.log(scoresList);
-  callback(scoresList);
-});
+    console.log(scoresList);
+    callback(scoresList);
+  });
 }
 
 module.exports = {
-  insertUser,
+  addUser,
+  resetNames,
   drinkWater,
   getScores,
 };
