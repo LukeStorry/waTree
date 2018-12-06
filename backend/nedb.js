@@ -13,7 +13,7 @@ function resetNames(usernames) {
   var newDB = [];
   for (var i = 0; i < namesArray.length; i++) {
     newDB.push({
-      number: i,
+      bottleNum: i,
       name: namesArray[i],
       drinks: [],
     });
@@ -27,36 +27,43 @@ function resetNames(usernames) {
 function createNewDoc(username, callback) {
   db.find({}, function(err, users) {
     var userNum;
-    var numberArray = users.map(function(u) { return u.number; });
+    var bottleNumArray = users.map(function(u) { return u.bottleNum; });
     for (userNum = 0; userNum < users.length + 1; userNum++) {
       console.log(userNum);
-      if (!numberArray.includes(userNum)) {
+      if (!bottleNumArray.includes(userNum)) {
         break;
       }
     }
     var doc = {
-      number: userNum,
-      name: username,
+      bottleNum: userNum,
+      name: name,
       drinks: [],
     };
     callback(doc);
   });
 }
 
-function addUser(username) {
-  createNewDoc(username, function(doc) {
+function addUser(name) {
+  createNewDoc(name, function(doc) {
     db.insert(doc, function(err, newDoc) {
       console.log('Inserted a new user to db:', newDoc);
     });
   })
 }
 
-function drinkWater(number, callback) {
-  var thisTimestamp = Math.floor(Date.now() / 1000)
+function rename(bottleNum, name) {
+  db.update({ bottleNum: bottleNum }, {$set: { name: name } },
+     function(err, numAffected) {
+       console.log('updated',numAffected,'docs: set name', name, 'on bottle', bottleNum);
+    });
+}
 
-  db.update({ number: number }, { $push: { drinks: thisTimestamp } },
+
+function drinkWater(bottleNum, callback) {
+  var thisTimestamp = Math.floor(Date.now() / 1000)
+  db.update({ bottleNum: bottleNum }, { $push: { drinks: thisTimestamp } },
     function() {
-      console.log('added timestamp', thisTimestamp, 'to user', number);
+      console.log('added timestamp', thisTimestamp, 'to bottle', bottleNum);
       callback();
     }
   );
@@ -74,7 +81,7 @@ function getScores(callback) {
       });
       console.log(user.name, 'score:', score);
       scoresList.push({
-        'User': user.number,
+        'Bottle': user.bottleNum,
         'UserName': user.name,
         'Score': Math.floor(Math.min(score, 100)),
         'isRaining': (now - 3 < user.drinks[user.drinks.length - 1]),
@@ -90,4 +97,5 @@ module.exports = {
   resetNames,
   drinkWater,
   getScores,
+  rename,
 };

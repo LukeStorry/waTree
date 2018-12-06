@@ -43,10 +43,17 @@ app.get("/add/:username/", function(req, res) {
   db.addUser(username);
 });
 
-app.get("/has-drunk/:number/", function(req, res) {
-  var number = parseInt(req.params.number);
-  db.drinkWater(number, function() {
-    console.log("user", number, "has drank water!");
+app.get("/rename/:bottleNum/:username/", function(req, res) {
+  var bottleNum = parseInt(req.params.bottleNum);
+  var username = req.params.username;
+  console.log("name:", username, "is being added to bottle", bottleNum);
+  db.rename(bottleNum, username);
+});
+
+app.get("/has-drunk/:bottleNum/", function(req, res) {
+  var bottleNum = parseInt(req.params.bottleNum);
+  db.drinkWater(bottleNum, function() {
+    console.log("user", bottleNum, "has drank water!");
   });
 
   res.writeHead(200);
