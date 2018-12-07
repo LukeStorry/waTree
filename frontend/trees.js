@@ -1,6 +1,6 @@
 d3.json("http://watree-backend.herokuapp.com/")
-
 .then(function(treeData){
+  console.log(treeData)
   var barPadding = 5;
   var graphHeight = document.getElementById('treesRow').offsetHeight;
   var graphWidth = document.getElementById('treesRow').scrollWidth;
@@ -38,8 +38,8 @@ d3.json("http://watree-backend.herokuapp.com/")
         return "translate(" + [(treeWidth * i), 0] + ")";
     })
     .style("background-image", function(d){
-      if (d.isRaining) return "none"
-      else             return "url(frontend/rainy-7.svg)";
+      if (d.isRaining) return "url(frontend/rainy-7.svg)";
+      else             return "none";
     });
 
   var treeGraph = d3.select('#treesRow')
