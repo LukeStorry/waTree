@@ -86,6 +86,8 @@ void setup(void) {
 
   // initialize the pushbutton pin as an input:
   pinMode(buttonPin, INPUT);
+  
+  strip.setBrightness(64);
 
   strip.begin();
   strip.show(); 
@@ -123,26 +125,26 @@ void upon_drink(){
   Serial.println("Person has had water");
   Serial.print("--------------------------------------------------");
   
-//  if(WiFi.status()== WL_CONNECTED){   //Check WiFi connection status
-//   
-//     HTTPClient http;    //Declare object of class HTTPClient
-//   
-//     http.begin("https://lukestorry.co.uk/waTree-forest/");  //Specify request destination
-//     http.addHeader("Content-Type", "text/plain");  //Specify content-type header
-//   
-//     int httpCode = http.POST("Tilted");                 //Send the request
-//     String payload = http.getString();                  //Get the response payload
-//   
-//     Serial.println(httpCode);   //Print HTTP return code
-//     Serial.println(payload);    //Print request response payload
-//   
-//     http.end();  //Close connection
-//   
-//   }else{
-//   
-//      Serial.println("Error in WiFi connection");   
-//   
-//   }
+  if(WiFi.status()== WL_CONNECTED){   //Check WiFi connection status
+   
+     HTTPClient http;    //Declare object of class HTTPClient
+   
+     http.begin("http://watree-backend.herokuapp.com/has-drunk/0");  //Specify request destination
+     http.addHeader("Content-Type", "text/plain");  //Specify content-type header
+
+     int httpCode = http.GET();
+     String payload = http.getString();
+     
+     Serial.println(payload);
+     Serial.println(httpCode);   //Print HTTP return code
+   
+     http.end();  //Close connection
+   
+   }else{
+   
+      Serial.println("Error in WiFi connection");   
+   
+   }
 }
 
 void check_for_drink(){
