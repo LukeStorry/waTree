@@ -11,8 +11,8 @@ Hosted at [lukestorry.co.uk/waTree](https://lukestorry.co.uk/waTree-forest)
 - [x] Add in tree image
 - [x] Add more info on-screen - names etc.
 - [x] Sort out structure - names, rain, trees
+- [x] Pull in data from Sunny's API
 - [ ] Change rain image
 - [ ] Change tree image? i.e. make from SVG instead
-- [ ] Pull in data from Sunny's API
 - [ ] Sort out updating every few secs
 - [ ] Put items in tree (e.g. if above 70% put rotating birb in tree)
