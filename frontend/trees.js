@@ -1,13 +1,6 @@
-d3.json("http://localhost:3030/all")
+d3.json("http://watree-backend.herokuapp.com/")
+
 .then(function(treeData){
-
-  var treeData = [{"User": 1, "UserName": "user1", "Score": 50, "isRaining": true},
-                  {"User": 2, "UserName": "user2", "Score": 60, "isRaining": false},
-                  {"User": 3, "UserName": "user3", "Score": 40, "isRaining": true},
-                  {"User": 4, "UserName": "user4", "Score": 100, "isRaining": false},
-                 ];
-  // TODO - take out once DB has proper data
-
   var barPadding = 5;
   var graphHeight = document.getElementById('treesRow').offsetHeight;
   var graphWidth = document.getElementById('treesRow').scrollWidth;
@@ -44,7 +37,6 @@ d3.json("http://localhost:3030/all")
     .attr("transform", function(d, i) {
         return "translate(" + [(treeWidth * i), 0] + ")";
     })
-    // .style("background-color", "blue");
     .style("background-image", function(d){
       if (d.isRaining) return "none"
       else             return "url(frontend/rainy-7.svg)";
