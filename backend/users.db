@@ -1,7 +1,3 @@
-{"name":"potato","drinks":[],"_id":"OEEjG82APdolYsPw"}
-{"name":"potato","drinks":["2018-12-3 21:52:22"],"_id":"OEEjG82APdolYsPw"}
-{"name":"tomato","drinks":[],"_id":"C7VEKy5o1IZrc91c"}
-{"name":"tomato","drinks":["2018-12-3 21:52:25"],"_id":"C7VEKy5o1IZrc91c"}
-{"name":"tomato","drinks":["2018-12-3 21:52:25","2018-12-3 21:52:36"],"_id":"C7VEKy5o1IZrc91c"}
-{"name":"tomato","drinks":["2018-12-3 21:52:25","2018-12-3 21:52:36","2018-12-3 21:52:44"],"_id":"C7VEKy5o1IZrc91c"}
-{"name":"potato","drinks":["2018-12-3 21:52:22","2018-12-3 21:52:54"],"_id":"OEEjG82APdolYsPw"}
+{"bottleNum":0,"name":"potato","drinks":[],"_id":"qiF9ubPB0e57g5Jt"}
+{"bottleNum":1,"name":"tomato","drinks":[],"_id":"yEWXffiQKO1Tx8Wv"}
+{"bottleNum":2,"name":"fred","drinks":[],"_id":"3gAztkupcXaHqv2q"}
