@@ -1,4 +1,4 @@
-d3.json("http://watree-backend.herokuapp.com/")
+d3.json("https://watree-backend.herokuapp.com/")
 .then(function(treeData){
   console.log(treeData)
   var barPadding = 5;
