@@ -24,8 +24,16 @@ app.get("/test/", function(req, res) {
 });
 
 app.get("/", function(req, res) {
-  console.log("returning All!");
+  console.log("returning all Scores!");
   db.getScores(function(scoresList) {
+    res.send(JSON.stringify(scoresList));
+    res.end();
+  });
+});
+
+app.get("/data", function(req, res) {
+  console.log("returning all Data!");
+  db.getAll(function(scoresList) {
     res.send(JSON.stringify(scoresList));
     res.end();
   });

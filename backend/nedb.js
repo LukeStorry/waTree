@@ -79,12 +79,13 @@ function getScores(callback) {
       user.drinks.forEach(function(drink) {
         score += 100 / Math.sqrt(now - drink);
       });
-      console.log(user.name, 'score:', score);
+      console.log(user.name, 'uncapped score:', score);
       scoresList.push({
         'Bottle': user.bottleNum,
         'UserName': user.name,
         'Score': Math.floor(Math.min(score, 100)),
         'isRaining': (now - 3 < user.drinks[user.drinks.length - 1]),
+        'totalDrinks': user.drinks.length,
       });
     });
     console.log(scoresList);
@@ -92,10 +93,17 @@ function getScores(callback) {
   });
 }
 
+function getAll(callback) {
+  db.find({}, function(err, docs) {
+    callback(docs)
+  })
+}
+
 module.exports = {
   addUser,
+  rename,
   resetNames,
   drinkWater,
   getScores,
-  rename,
+  getAll,
 };
