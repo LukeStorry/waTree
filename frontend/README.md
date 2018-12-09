@@ -1,4 +1,4 @@
-# water-forest
+# waTree-forest
 An interactively-growing forest website that uses the Backend to get JSON info on how the users' trees should look.
 
 Hosted at [lukestorry.co.uk/waTree](https://lukestorry.co.uk/waTree-forest)
