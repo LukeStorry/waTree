@@ -2,7 +2,7 @@ console.log("started");
 
 setInterval(function(){
 	drawChart()
-}, 5000);
+}, 1500);
 
 function drawChart() {
 
