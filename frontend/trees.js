@@ -2,8 +2,6 @@ setInterval(function(){
 	drawChart()
 }, 1000);
 
-console.log(Math.random());
-
 function drawChart() {
   d3.json("https://watree-backend.herokuapp.com/")
   .then(function(treeData){
