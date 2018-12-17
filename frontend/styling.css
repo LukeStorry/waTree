@@ -8,6 +8,7 @@ html, body {
 text {
   font-size: 30px;
   font-family: "Arial", sans-serif;
+  color: white;
 }
 
 .wrapper {

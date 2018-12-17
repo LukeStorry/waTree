@@ -1,8 +1,8 @@
-console.log("started");
-
 setInterval(function(){
 	drawChart()
 }, 1000);
+
+console.log(Math.random());
 
 function drawChart() {
   d3.json("https://watree-backend.herokuapp.com/")
@@ -34,6 +34,7 @@ function drawChart() {
     .data(treeData)
     .enter()
     .append("text")
+		.attr("fill", "white")
     .attr("width", treeWidth - barPadding)
     .attr("text-anchor", "middle")
     .attr("dominant-baseline", "middle")
@@ -59,14 +60,10 @@ function drawChart() {
       else             return "none";
     });
 
-		var viewBoxDims = "0 0 " + graphWidth + " " + graphHeight;
-
     var treeGraph = d3.select('#treesRow')
     .append("svg")
     .attr("width", graphWidth)
     .attr("height", graphHeight)
-		.attr("viewbox", viewBoxDims)
-		.attr('preserveAspectRatio',"xMidYMid meet");
 
     var tree = treeGraph.selectAll("g")
     .data(treeData)
@@ -85,6 +82,14 @@ function drawChart() {
 		  return (d.Score+"%");
 		})
 		.attr("width", treeWidth - barPadding)
-		.attr("xlink:href", "frontend/Pics/redTree.png")
+		.attr("xlink:href", function(d){
+			if (d.Bottle == 0) {return "frontend/Pics/redTree.png";}
+			else if (d.Bottle == 1) {return "frontend/Pics/yellowTree.png";}
+			else if (d.Bottle == 2) {return "frontend/Pics/greenTree.png";}
+			else if (d.Bottle == 3) {return "frontend/Pics/purpleTree.png";}
+			else if (d.Bottle == 4) {return "frontend/Pics/blueTree.png";}
+			else 										{return "frontend/Pics/pinkTree.png";}
+
+		})
   });
 }
