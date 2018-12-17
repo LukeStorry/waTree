@@ -84,7 +84,7 @@ function getScores(callback) {
         'Bottle': user.bottleNum,
         'UserName': user.name,
         'Score': Math.floor(Math.min(score, 100)),
-        'isRaining': (now - 3 < user.drinks[user.drinks.length - 1]),
+        'isRaining': (now - 8 < user.drinks[user.drinks.length - 1]),
         'totalDrinks': user.drinks.length,
       });
     });
