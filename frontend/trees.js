@@ -1,10 +1,10 @@
 console.log("started");
 
-// setInterval(function(){
-// 	drawChart()
-// }, 1000);
+setInterval(function(){
+	drawChart()
+}, 1000);
 
-drawChart();
+// drawChart();
 
 function drawChart() {
 
@@ -91,6 +91,7 @@ function drawChart() {
     treeGraph.append("defs")
     .append('pattern')
     .attr('id', '3040bg')
+		// .attr('patternUnits', 'userSpaceOnUse')
 		.attr('patternContentUnits', 'objectBoundingBox')
     // .attr('patternContentUnits', 'userSpaceOnUse')
 		// .attr("viewbox", "0 0 100 300")
