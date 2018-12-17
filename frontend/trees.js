@@ -2,24 +2,25 @@ console.log("started");
 
 setInterval(function(){
 	drawChart()
-}, 1500);
+}, 2000);
 
 function drawChart() {
 
   //Remove old data
 
-  var nameRowNode = document.getElementById("nameRow");
-  nameRowNode.innerHTML = '';
-
-  var rainRowNode = document.getElementById("rainRow");
-  rainRowNode.innerHTML = '';
-
-  var treeRowNode = document.getElementById("treesRow");
-  treeRowNode.innerHTML = '';
 
   // Pull in new data and make graph
   d3.json("https://watree-backend.herokuapp.com/")
   .then(function(treeData){
+
+		var nameRowNode = document.getElementById("nameRow");
+		nameRowNode.innerHTML = '';
+
+		var rainRowNode = document.getElementById("rainRow");
+		rainRowNode.innerHTML = '';
+
+		var treeRowNode = document.getElementById("treesRow");
+		treeRowNode.innerHTML = '';
 
     console.log(treeData)
     var barPadding = 5;
