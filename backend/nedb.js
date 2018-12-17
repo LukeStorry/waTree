@@ -72,14 +72,14 @@ function drinkWater(bottleNum, callback) {
 function getScores(callback) {
   db.find({}, function(err, users) {
     var scoresList = [];
-    console.log(users);
+    // console.log(users);
     users.forEach(function(user) {
       var score = 30;
       var now = 1 + Math.floor(Date.now() / 1000); // needs +1 to avoid zero division
       user.drinks.forEach(function(drink) {
         score += 100 / Math.sqrt(now - drink);
       });
-      console.log(user.name, 'uncapped score:', score);
+      console.log(user.name, 'score:', score);
       scoresList.push({
         'Bottle': user.bottleNum,
         'UserName': user.name,
@@ -88,7 +88,7 @@ function getScores(callback) {
         'totalDrinks': user.drinks.length,
       });
     });
-    console.log(scoresList);
+    // console.log(scoresList);
     callback(scoresList);
   });
 }
