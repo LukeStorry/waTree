@@ -1,8 +1,10 @@
 console.log("started");
 
-setInterval(function(){
-	drawChart()
-}, 2000);
+// setInterval(function(){
+// 	drawChart()
+// }, 1000);
+
+drawChart();
 
 function drawChart() {
 
@@ -64,10 +66,14 @@ function drawChart() {
       else             return "none";
     });
 
+		var viewBoxDims = "0 0 " + graphWidth + " " + graphHeight;
+
     var treeGraph = d3.select('#treesRow')
     .append("svg")
     .attr("width", graphWidth)
-    .attr("height", graphHeight);
+    .attr("height", graphHeight)
+		.attr("viewbox", viewBoxDims)
+		.attr('preserveAspectRatio',"xMidYMid meet");
 
     treeGraph.append("defs")
     .append('pattern')
@@ -85,15 +91,18 @@ function drawChart() {
     treeGraph.append("defs")
     .append('pattern')
     .attr('id', '3040bg')
-    .attr('patternContentUnits', 'objectBoundingBox')
+		.attr('patternContentUnits', 'objectBoundingBox')
+    // .attr('patternContentUnits', 'userSpaceOnUse')
+		// .attr("viewbox", "0 0 100 300")
+		// .attr('preserveAspectRatio',"xMidYMid slice")
     .attr('width', 1)
     .attr('height', 1)
     .append("image")
-    .attr("xlink:href", "frontend/Pics/3040.png")
+    .attr("xlink:href", "frontend/Pics/5060.png")
     .attr('x', 0)
     .attr('y', 0)
     .attr('width', 1)
-    .attr('height', 1);
+    .attr('height', 1)
 
     treeGraph.append("defs")
     .append('pattern')

@@ -18,10 +18,8 @@ text {
 }
 
 #treesRow {
-  /* background-color: black; */
+  /* background-color: white; */
   background-image: url("Pics/backgroundFaded.jpg");
-  /* background-size: contain;
-  background-repeat: no-repeat; */
   background-size: 100% 100%;
 }
 
