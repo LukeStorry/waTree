@@ -14,11 +14,7 @@ text {
   display: grid;
   width: 100vw;
   height: 100vh;
-  grid-template-rows: 10fr 15fr 80fr;
+  grid-template-rows: 10fr 10fr 80fr;
   background-image: url("Pics/BackgroundFaded.jpg");
   background-size: 100% 100%;
-}
-
-#rainRow {
-  background-color: lightgray;
 }
