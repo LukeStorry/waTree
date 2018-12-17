@@ -6,7 +6,7 @@ html, body {
 }
 
 text {
-  font-size: 14px;
+  font-size: 30px;
   font-family: "Arial", sans-serif;
 }
 
@@ -15,4 +15,16 @@ text {
   width: 100vw;
   height: 100vh;
   grid-template-rows: 10fr 15fr 80fr;
+}
+
+#treesRow {
+  /* background-color: black; */
+  background-image: url("Pics/backgroundFaded.jpg");
+  /* background-size: contain;
+  background-repeat: no-repeat; */
+  background-size: 100% 100%;
+}
+
+#rainRow {
+  background-color: lightgray;
 }

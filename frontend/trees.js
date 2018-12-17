@@ -70,7 +70,111 @@ function drawChart() {
 
     treeGraph.append("defs")
     .append('pattern')
-    .attr('id', 'bg')
+    .attr('id', '2030bg')
+    .attr('patternContentUnits', 'objectBoundingBox')
+    .attr('width', 1)
+    .attr('height', 1)
+    .append("image")
+    .attr("xlink:href", "frontend/Pics/2030.png")
+    .attr('x', 0)
+    .attr('y', 0)
+    .attr('width', 1)
+    .attr('height', 1);
+
+    treeGraph.append("defs")
+    .append('pattern')
+    .attr('id', '3040bg')
+    .attr('patternContentUnits', 'objectBoundingBox')
+    .attr('width', 1)
+    .attr('height', 1)
+    .append("image")
+    .attr("xlink:href", "frontend/Pics/3040.png")
+    .attr('x', 0)
+    .attr('y', 0)
+    .attr('width', 1)
+    .attr('height', 1);
+
+    treeGraph.append("defs")
+    .append('pattern')
+    .attr('id', '4050bg')
+    .attr('patternContentUnits', 'objectBoundingBox')
+    .attr('width', 1)
+    .attr('height', 1)
+    .append("image")
+    .attr("xlink:href", "frontend/Pics/4050.png")
+    .attr('x', 0)
+    .attr('y', 0)
+    .attr('width', 1)
+    .attr('height', 1);
+
+    treeGraph.append("defs")
+    .append('pattern')
+    .attr('id', '5060bg')
+    .attr('patternContentUnits', 'objectBoundingBox')
+    .attr('width', 1)
+    .attr('height', 1)
+    .append("image")
+    .attr("xlink:href", "frontend/Pics/5060.png")
+    .attr('x', 0)
+    .attr('y', 0)
+    .attr('width', 1)
+    .attr('height', 1);
+
+    treeGraph.append("defs")
+    .append('pattern')
+    .attr('id', '6070bg')
+    .attr('patternContentUnits', 'objectBoundingBox')
+    .attr('width', 1)
+    .attr('height', 1)
+    .append("image")
+    .attr("xlink:href", "frontend/Pics/6070.png")
+    .attr('x', 0)
+    .attr('y', 0)
+    .attr('width', 1)
+    .attr('height', 1);
+
+    treeGraph.append("defs")
+    .append('pattern')
+    .attr('id', '7080bg')
+    .attr('patternContentUnits', 'objectBoundingBox')
+    .attr('width', 1)
+    .attr('height', 1)
+    .append("image")
+    .attr("xlink:href", "frontend/Pics/7080.png")
+    .attr('x', 0)
+    .attr('y', 0)
+    .attr('width', 1)
+    .attr('height', 1);
+
+    treeGraph.append("defs")
+    .append('pattern')
+    .attr('id', '8090bg')
+    .attr('patternContentUnits', 'objectBoundingBox')
+    .attr('width', 1)
+    .attr('height', 1)
+    .append("image")
+    .attr("xlink:href", "frontend/Pics/8090.png")
+    .attr('x', 0)
+    .attr('y', 0)
+    .attr('width', 1)
+    .attr('height', 1);
+
+    treeGraph.append("defs")
+    .append('pattern')
+    .attr('id', '90100bg')
+    .attr('patternContentUnits', 'objectBoundingBox')
+    .attr('width', 1)
+    .attr('height', 1)
+    .append("image")
+    .attr("xlink:href", "frontend/Pics/90100.png")
+    .attr('x', 0)
+    .attr('y', 0)
+    .attr('width', 1)
+    .attr('height', 1);
+
+    treeGraph.append("defs")
+    .append('pattern')
+    .attr('id', 'defaultbg')
     .attr('patternContentUnits', 'objectBoundingBox')
     .attr('width', 1)
     .attr('height', 1)
@@ -98,7 +202,35 @@ function drawChart() {
       return (d.Score+"%");
     })
     .attr("width", treeWidth - barPadding)
-    .attr("fill", "url(#bg)");
+    .attr("fill", function(d){
+				if (d.Score >= 20 && d.Score < 30){
+					return "url(#2030bg)";
+				}
+				else if (d.Score >= 30 && d.Score < 40){
+					return "url(#3040bg)";
+				}
+				else if (d.Score >= 40 && d.Score < 50){
+					return "url(#4050bg)";
+				}
+				else if (d.Score >= 50 && d.Score < 60){
+					return "url(#5060bg)";
+				}
+				else if (d.Score >= 60 && d.Score < 70){
+					return "url(#6070bg)";9
+				}
+				else if (d.Score >= 70 && d.Score < 80){
+					return "url(#7080bg)";
+				}
+				else if (d.Score >= 80 && d.Score < 90){
+					return "url(#8090bg)";
+				}
+				else if (d.Score >= 90 && d.Score <= 100){
+					return "url(#90100bg)";
+				}
+				else {
+					return "url(#defaultbg)";
+				}
+		});
 
   });
 
