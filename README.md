@@ -28,3 +28,4 @@ An API based on a series of HTTP GET calls, to both register drinks and create a
 A dynamically-scaling forest that uses the backend-supplied JSON to decide on tree size, names and animations.
 
 ![screenshot of frontend](https://github.com/LukeStorry/waTree/blob/master/frontend/Pics/watree-frontend.png)
+Hosted at [lukestorry.co.uk/waTree/display.html](https://lukestorry.co.uk/waTree/display.html)
