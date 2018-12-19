@@ -2,8 +2,13 @@
 
 An arduino-enhanced water bottle, with a socially-growing forest, to enhance social interaction of hydration, for COMSM0009 Interactive Devices.
 
+---
+
+[Full Demo Video on Youtube](https://youtu.be/FimLVj6nT68)
+
 ![Image of full system](/frontend/Pics/study%20space.png)
 
+---
 
 ## Components
 
