@@ -1,4 +1,4 @@
-![waTree](frontend/Pics/watree%20logo.png)
+[![waTree](frontend/Pics/watree%20logo.png)](https://github.com/LukeStorry/watree)
 
 An arduino-enhanced water bottle, with a socially-growing forest, to enhance social interaction of hydration, for COMSM0009 Interactive Devices.
 
