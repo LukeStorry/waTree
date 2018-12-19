@@ -4,13 +4,15 @@ An arduino-enhanced water bottle, with a socially-growing forest, to enhance soc
 
 ---
 
-[Full Demo Video on Youtube](https://youtu.be/FimLVj6nT68)
+## Youtube Demo
 
-![Image of full system](frontend/Pics/study%20space.png)
+<iframe width="560" height="315" src="https://www.youtube.com/embed/FimLVj6nT68" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ---
 
 ## Components
+
+![Image of full system](frontend/Pics/study%20space.png)
 
 ### Bottle
 Arduino code that registers a tilt on the accelerometer and calls the backend API to register that a particular bottle has been drunk from.
